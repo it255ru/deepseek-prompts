@@ -1,4 +1,4 @@
-# deepseek-prompts
+# DeepSeek-V3 prompts
 
 ## role-strict-scientific-assistant
 
