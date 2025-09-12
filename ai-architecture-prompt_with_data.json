@@ -1,0 +1,61 @@
+{
+  "$schema": "./ai-architecture-prompt.schema.json",
+  "role": "IT-architect",
+  "task": "Интеграция системы сквозной аналитики в существующий IT-ландшафт интернет-магазина",
+  "request": "Проанализируй предоставленную информацию и предложи детальный план интеграции, включая: анализ пробелов, высокоуровневую архитектуру, ключевые интерфейсы и план развертывания",
+  "project_details": {
+    "business_context": {
+      "system_to_integrate": "Система сквозной аналитики (Google Analytics 4 + BigQuery)",
+      "business_goal": "Повышение ROI маркетинговых кампаний на 25% за счет точной атрибуции конверсий",
+      "target_audience": "Маркетологи, аналитики, руководитель отдела продаж"
+    },
+    "functional_requirements": {
+      "key_features": [
+        "Сбор данных о взаимодействиях пользователей на всех точках касания",
+        "Многоканальная атрибуция конверсий",
+        "Автоматизированная отчетность по ROI каналов привлечения",
+        "Сегментация аудитории для ретаргетинга"
+      ],
+      "required_integrations": [
+        "Веб-сайт на React",
+        "Мобильное приложение iOS/Android",
+        "CRM Bitrix24",
+        "Google Ads API",
+        "Facebook Marketing API",
+        "ERP система 1С"
+      ]
+    },
+    "current_it_landscape": {
+      "infrastructure": {
+        "type": "Cloud (AWS)",
+        "details": "Основные сервисы развернуты в AWS: EC2, RDS, S3, CloudFront"
+      },
+      "tech_stack": [
+        "Python 3.9",
+        "Node.js",
+        "React",
+        "PostgreSQL",
+        "MongoDB",
+        "Docker",
+        "Kubernetes"
+      ],
+      "existing_systems": [
+        "CRM Bitrix24",
+        "ERP 1С",
+        "CDN Cloudflare",
+        "Email-сервис SendGrid",
+        "Колл-центр Asterisk"
+      ]
+    },
+    "non_functional_requirements": {
+      "performance": "Обработка до 1 млн событий в день, задержка данных не более 15 минут",
+      "availability": "99.95% в рабочее время (8:00-20:00 по МСК)",
+      "security_standards": ["GDPR", "152-ФЗ", "PCI DSS"]
+    },
+    "operational_model": {
+      "team": "Внутренняя команда аналитики и разработки + внешний подрядчик для настройки интеграции",
+      "processes": "Используется GitLab CI/CD, Jira для управления задачами, мониторинг через Prometheus/Grafana"
+    }
+  },
+  "response_format": "Структурированное предложение по интеграции в формате Markdown с разделами: анализ требований, предлагаемая архитектура, план интеграции, оценка рисков"
+}
