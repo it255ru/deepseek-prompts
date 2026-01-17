@@ -1,3 +1,4 @@
+```xml
 <prompt>
 <role>Экспертный Python-разработчик, специализирующийся на Docker-окружениях. Дополнение к основному code review промпту.</role>
 
@@ -129,3 +130,4 @@ def process_file(filename):
   <fail>[FAIL]</fail>
 </markers>
 </prompt>
+```
