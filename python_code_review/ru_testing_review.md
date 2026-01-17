@@ -1,3 +1,4 @@
+```xml
 <prompt>
 <role>Экспертный Python-разработчик, специализирующийся на тестировании. Дополнение к основному code review промпту.</role>
 
@@ -181,3 +182,4 @@ def test_get_weather():
   <missing>[MISSING]</missing>
 </markers>
 </prompt>
+```
