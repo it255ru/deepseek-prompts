@@ -1,0 +1,88 @@
+# Changelog
+
+Все заметные изменения в промптах для Python Code Review.
+
+Формат основан на [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+---
+
+## [2.0.0] - 2025-01-17
+
+### Разделение на модули
+- **BREAKING**: Промпт разделён на 3 файла:
+  - `code_review_prompt.md` — основной промпт
+  - `docker_review_prompt.md` — Docker-специфичные проверки
+  - `testing_review_prompt.md` — тестирование и примеры тестов
+
+### Добавлено
+- `<check_order>` — приоритет проверок (Security → Correctness → Error handling → Architecture → Style)
+- `<code_complexity_detection>` — автоматическое определение простого/сложного кода
+- `<common_mistakes_examples>` — 7 типичных ошибок с примерами [FAIL]/[OK]
+- `<output_example>` — полный пример ожидаемого отчёта
+- `<modularization>` — формат вывода с Migration Plan для LOC > 500
+- Конкретные критерии оценки в `<grade>` (0 critical, ≤2 important = Отлично)
+- Оценка времени исправления в секции `<fixes>`
+
+### Изменено
+- Секция `<modules>` уточнена: применяется только при LOC > 500 → src/
+- Формат вывода упрощён с 12 секций до 5 основных
+- Docker проверки вынесены в отдельный файл
+- Примеры тестов вынесены в отдельный файл
+
+### Удалено
+- `<context_analysis>` с 7 вопросами — избыточно, LLM редко задаёт уточняющие вопросы
+- `<genius_approach>` — субъективно и размыто
+- `<line_by_line>` построчные комментарии — нереалистично для больших файлов
+- `<todo>TODO: crbug.com/ID` — слишком специфично (Chromium)
+- Дублирование правил imports (было в 3 местах)
+- Детальный `<dockerfile_review>` из основного промпта (перенесён в docker_review_prompt.md)
+
+---
+
+## [1.0.0] - 2025-01-17
+
+### Начальная версия
+- Монолитный промпт (~450 строк XML)
+- Поддержка Google Style Guide
+- Поддержка Hitchhiker's Guide to Python
+- Docker Environment проверки (встроенные)
+- Контекстный анализ с вопросами
+- Формат вывода с 12 секциями
+- Функциональный подход (без OOP)
+
+---
+
+## Docker Review Prompt
+
+### [1.1.0] - 2025-01-17
+
+#### Добавлено
+- CVE security scanning в чеклисте
+- `<example_output>` для Dockerfile review
+- Детальные примеры graceful shutdown с SIGINT
+- Пример Docker secrets с fallback на ENV
+
+---
+
+## Testing Review Prompt
+
+### [1.1.0] - 2025-01-17
+
+#### Добавлено
+- `<edge_cases_to_test>` — маппинг функций к конкретным тестам
+- Примеры тестов для collection operations
+- Примеры тестов для file operations с tmp_path
+- 6-й антипаттерн: Global state pollution
+- `<test_fixtures_recommendations>` — pytest fixtures
+- Примеры custom fixtures
+
+---
+
+## Планы на будущее
+
+### Возможные улучшения
+- [ ] Промпт для async/await кода
+- [ ] Промпт для type checking (mypy интеграция)
+- [ ] Промпт для генерации документации (README, CHANGELOG, docs)
+- [ ] Промпт для security-focused review
+- [ ] Интеграция с pre-commit hooks
