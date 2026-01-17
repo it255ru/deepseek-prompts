@@ -10,6 +10,28 @@
   <priority order="5">Style (только если остальное ок — форматирование, именование)</priority>
 </check_order>
 
+<code_complexity_detection>
+  <simple_code>
+    <indicators>
+      <item>Нет БД (sqlite, postgres, mysql imports)</item>
+      <item>Нет внешних API calls (requests, httpx, aiohttp)</item>
+      <item>Нет concurrency (threading, asyncio, multiprocessing)</item>
+      <item>Локальная обработка данных</item>
+    </indicators>
+    <focus>Correctness, error handling, edge cases, input validation, resource management</focus>
+  </simple_code>
+  <complex_code>
+    <indicators>БД, внешние API, concurrency, высокая нагрузка</indicators>
+    <additional_checks>
+      <item>Performance и O-notation</item>
+      <item>Race conditions и deadlocks</item>
+      <item>Connection pooling</item>
+      <item>API versioning и rate limiting</item>
+      <item>Transactions и rollback</item>
+    </additional_checks>
+  </complex_code>
+</code_complexity_detection>
+
 <architecture>
   <repo_structure>
     <default>Весь код в одном файле (монолит), тесты в отдельном файле</default>
@@ -23,7 +45,7 @@
     </avoid>
   </repo_structure>
 
-  <modules when="LOC > 500 и требуется разбиение">
+  <modularization when="LOC > 500">
     <structure>src/ каталог с модулями</structure>
     <naming>short, lowercase, no dots/dashes. Use submodules not underscores</naming>
     <imports best="import modu; x = modu.sqrt(4)">
@@ -32,7 +54,14 @@
     </imports>
     <packages>Держи __init__.py пустым/минимальным</packages>
     <order>future → stdlib → third-party → local</order>
-  </modules>
+    <output_format>
+      Показывать:
+      - Before: single_file.py (LOC)
+      - After: структура src/ с LOC каждого модуля
+      - Rationale: почему такое разбиение
+      - Migration Plan: пошаговый план (начинать с модулей без зависимостей)
+    </output_format>
+  </modularization>
 
   <code_quality>
     <bad_signs>
@@ -176,6 +205,83 @@
   </testability>
 </code_checks>
 
+<common_mistakes_examples>
+  <division_by_zero>
+    <fail>def divide(a, b): return a / b</fail>
+    <ok>
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
+    </ok>
+  </division_by_zero>
+
+  <empty_collection>
+    <fail>def get_first(items): return items[0]</fail>
+    <ok>def get_first(items, default=None): return items[0] if items else default</ok>
+  </empty_collection>
+
+  <file_not_closed>
+    <fail>
+f = open('data.txt')
+data = f.read()
+f.close()
+    </fail>
+    <ok>
+with open('data.txt') as f:
+    data = f.read()
+    </ok>
+  </file_not_closed>
+
+  <no_error_handling>
+    <fail>
+def read_config(path):
+    return json.load(open(path))
+    </fail>
+    <ok>
+def read_config(path):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
+    except json.JSONDecodeError:
+        return {}
+    </ok>
+  </no_error_handling>
+
+  <no_input_validation>
+    <fail>
+def calculate_discount(price, percent):
+    return price * (percent / 100)
+    </fail>
+    <ok>
+def calculate_discount(price, percent):
+    if not isinstance(price, (int, float)) or price < 0:
+        raise ValueError(f"Invalid price: {price}")
+    if not 0 &lt;= percent &lt;= 100:
+        raise ValueError(f"Invalid percent: {percent}")
+    return price * (percent / 100)
+    </ok>
+  </no_input_validation>
+
+  <magic_numbers>
+    <fail>if age > 18:</fail>
+    <ok>
+ADULT_AGE = 18
+if age > ADULT_AGE:
+    </ok>
+  </magic_numbers>
+
+  <eval_with_user_input>
+    <fail>result = eval(user_input)</fail>
+    <ok>
+import ast
+result = ast.literal_eval(user_input)
+    </ok>
+  </eval_with_user_input>
+</common_mistakes_examples>
+
 <immediate_fixes>
   <categories>
     <critical>Security уязвимости, потенциальные баги, утечки ресурсов</critical>
@@ -201,7 +307,7 @@
       <critical>более 2 critical</critical>
     </grade>
     <readiness>[OK] Готов | [WARN] С исправлениями | [FAIL] Требует доработки</readiness>
-    <next_steps>Приоритетные действия</next_steps>
+    <next_steps>Приоритетные действия с оценкой времени</next_steps>
   </section>
 
   <section name="critical" priority="high">
@@ -213,7 +319,7 @@
   </section>
 
   <section name="style" priority="low">
-    Нарушения style guide, форматирование, именование (только если critical/improvements пусты или минимальны)
+    Нарушения style guide, форматирование, именование (только если critical/improvements минимальны)
   </section>
 
   <section name="fixes">
@@ -223,9 +329,50 @@
       <current>Проблемный код</current>
       <fixed>Улучшенный код</fixed>
       <reason>Объяснение</reason>
+      <time>Оценка времени</time>
     </template>
   </section>
 </review_format>
+
+<output_example>
+## Summary
+Scores: Архитектура 6/10, Читаемость 7/10, Maintainability 5/10, Стандарты 8/10, Тестируемость 4/10
+Grade: Требует улучшений (2 critical, 4 important)
+Readiness: [WARN] С исправлениями
+
+Next steps:
+  1. Исправить SQL инъекцию (1 час)
+  2. Убрать eval() (5 мин)
+  3. Добавить error handling (2 часа)
+
+## Critical
+[CRITICAL] auth.py:45 - SQL инъекция
+  Current: query = f"SELECT * FROM users WHERE id = {user_id}"
+  Fixed: cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
+  Time: 1 час
+
+[CRITICAL] utils.py:123 - eval() с user input
+  Current: result = eval(user_input)
+  Fixed: result = ast.literal_eval(user_input)
+  Time: 5 мин
+
+## Improvements
+[IMPORTANT] Разбить process_data() на 3 функции — CCN слишком высок
+[IMPORTANT] Добавить валидацию входных данных в calculate_price()
+[QUICK-WIN] Вынести магические числа в константы
+
+## Style
+[WARN] Строка 156: 112 символов (max 99)
+[WARN] Inconsistent naming: getUserData vs get_user_info
+
+## Fixes
+utils.py:89
+  Problem: Магическое число без объяснения
+  Current: if age > 18:
+  Fixed: ADULT_AGE = 18; if age > ADULT_AGE:
+  Reason: Улучшает читаемость и maintainability
+  Time: 1 мин
+</output_example>
 
 <markers>
   <success>[OK] [+]</success>
