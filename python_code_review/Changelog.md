@@ -91,6 +91,23 @@
 
 ---
 
+## Architecture as Code Prompt
+
+### [1.0.0] - 2025-01-17
+
+#### Добавлено
+- 8 типов диаграмм: System Context, Container, Module Dependencies, Data Flow, Sequence, Deployment, ER, State Machine
+- Полный справочник Graphviz DOT синтаксиса
+- 4 цветовые схемы: default, C4 Model, status, layers
+- 8 готовых шаблонов диаграмм с примерами
+- Анализ кода: извлечение зависимостей, метрики coupling/cohesion
+- Подсветка проблем: циклические зависимости, god modules, orphans
+- Процесс генерации диаграмм из кода
+- Команды рендеринга (PNG, SVG, PDF)
+- Интеграция в документацию
+
+---
+
 ## CI/CD Prompt
 
 ### [1.0.0] - 2025-01-17
