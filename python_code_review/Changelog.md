@@ -91,6 +91,29 @@
 
 ---
 
+## CI/CD Prompt
+
+### [1.0.0] - 2025-01-17
+
+#### Добавлено
+- GitHub Actions полный шаблон с 5 stages
+- GitHub Actions минимальный шаблон
+- GitHub Actions reusable workflow
+- GitLab CI полный шаблон с templates
+- GitLab CI минимальный шаблон
+- GitLab CI child pipelines для монорепо
+- Matrix testing (multiple Python versions + OS)
+- Services: PostgreSQL, Redis
+- Docker build с multi-stage
+- Security scanning: bandit, pip-audit, CodeQL
+- Deployment: staging, production с environments
+- Best practices: security, performance, reliability
+- Common patterns: caching, artifacts, notifications, scheduled runs
+- Dockerfile оптимизированный для CI
+- Список required secrets
+
+---
+
 ## Security Review Prompt
 
 ### [1.0.0] - 2025-01-17
@@ -133,6 +156,6 @@
 ### Возможные улучшения
 - [ ] Промпт для async/await кода
 - [ ] Промпт для type checking (mypy интеграция)
-- [ ] Промпт для CI/CD конфигураций (GitHub Actions, GitLab CI)
-- [ ] Промпт для database review (SQL, ORM)
-- [ ] Интеграция с pre-commit hooks
+- [ ] Промпт для database review (SQL, ORM, migrations)
+- [ ] Промпт для API design review (REST, GraphQL)
+- [ ] Промпт для pre-commit hooks конфигурации
