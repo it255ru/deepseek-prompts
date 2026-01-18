@@ -91,6 +91,29 @@
 
 ---
 
+## Security Review Prompt
+
+### [1.0.0] - 2025-01-17
+
+#### Добавлено
+- 10 категорий проверок безопасности с приоритизацией
+- CWE references для всех уязвимостей
+- Примеры [CRITICAL]/[HIGH]/[MEDIUM]/[LOW] с кодом
+- Инъекции: SQL, Command, Code, SSTI, XPath
+- Authentication: password hashing, token generation, timing attacks
+- Secrets: hardcoded credentials, logs, version control
+- Cryptography: weak algorithms, key length, random generation
+- Input validation: path traversal, open redirect, ReDoS
+- File operations: upload, temp files, permissions
+- Deserialization: pickle, YAML, XML bombs
+- Dependencies: CVE checking, dependency confusion
+- Logging: sensitive data, log injection
+- Configuration: debug mode, default credentials, CORS
+- Security tools: bandit, semgrep, pip-audit, detect-secrets
+- Формат отчёта с severity levels
+
+---
+
 ## Makefile Prompt
 
 ### [1.0.0] - 2025-01-17
@@ -110,6 +133,6 @@
 ### Возможные улучшения
 - [ ] Промпт для async/await кода
 - [ ] Промпт для type checking (mypy интеграция)
-- [ ] Промпт для security-focused review
 - [ ] Промпт для CI/CD конфигураций (GitHub Actions, GitLab CI)
+- [ ] Промпт для database review (SQL, ORM)
 - [ ] Интеграция с pre-commit hooks
