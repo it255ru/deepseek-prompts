@@ -78,11 +78,38 @@
 
 ---
 
+## Documentation Prompt
+
+### [1.0.0] - 2025-01-17
+
+#### Добавлено
+- Шаблоны для README.md, CHANGELOG.md, CONTRIBUTING.md
+- Шаблоны для docs/API.md, docs/TESTING.md, docs/ARCHITECTURE.md
+- Формат docstrings (Google Style)
+- Вспомогательные файлы: .gitignore, pyproject.toml, LICENSE
+- Пошаговый процесс генерации документации
+
+---
+
+## Makefile Prompt
+
+### [1.0.0] - 2025-01-17
+
+#### Добавлено
+- Полный шаблон Makefile для Python проектов
+- Варианты таргетов: minimal, standard, full, library, cli_tool, web_service
+- Специализированные таргеты: database, web_server, security, docker_compose
+- Best practices для Makefile
+- Примеры для разных типов проектов
+- Автогенерируемый help с цветным выводом
+
+---
+
 ## Планы на будущее
 
 ### Возможные улучшения
 - [ ] Промпт для async/await кода
 - [ ] Промпт для type checking (mypy интеграция)
-- [ ] Промпт для генерации документации (README, CHANGELOG, docs)
 - [ ] Промпт для security-focused review
+- [ ] Промпт для CI/CD конфигураций (GitHub Actions, GitLab CI)
 - [ ] Интеграция с pre-commit hooks
